@@ -23,7 +23,6 @@ $LogstashLabel = New-Object System.Windows.Forms.Label
 $LogstashLabel.Location = New-Object System.Drawing.Size(20, 67.5)
 $LogstashLabel.Size = New-Object System.Drawing.Size(75,30)
 $LogstashLabel.Text = "Logstash"
-$LogstashLabel.Add_Click($logstash_context_click)
 $Form.Controls.Add($LogstashLabel)
 
 #FilebeatLabel
@@ -31,7 +30,6 @@ $FilebeatLabel = New-Object System.Windows.Forms.Label
 $FilebeatLabel.Location = New-Object System.Drawing.Size(20, 107.5)
 $FilebeatLabel.Size = New-Object System.Drawing.Size(75,30)
 $FilebeatLabel.Text = "Filebeat"
-$FilebeatLabel.Add_Click($filebeat_context_click)
 $Form.Controls.Add($FilebeatLabel)
 
 #MetricLabel
@@ -39,7 +37,6 @@ $MetricLabel = New-Object System.Windows.Forms.Label
 $MetricLabel.Location = New-Object System.Drawing.Size(20, 147.5)
 $MetricLabel.Size = New-Object System.Drawing.Size(75,30)
 $MetricLabel.Text = "Metricbeat"
-$MetricLabel.Add_Click($metricbeat_context_click)
 $Form.Controls.Add($MetricLabel)
 
 #HeartbeatLabel
@@ -47,7 +44,6 @@ $HeartbeatLabel = New-Object System.Windows.Forms.Label
 $HeartbeatLabel.Location = New-Object System.Drawing.Size(20, 187.5)
 $HeartbeatLabel.Size = New-Object System.Drawing.Size(75,30)
 $HeartbeatLabel.Text = "Heartbeat"
-$HeartbeatLabel.add_Click($heartbeat_context_OnClick)
 $Form.Controls.Add($HeartbeatLabel) 
 #endregion Labels
 
@@ -230,13 +226,102 @@ $Form.Controls.Add($HeartbeatRestartButton)
 #endregion Buttons
 
 
-function heartbeat_context_OnClick {
-    Write-Debug "d"
-    $HeartbeatButton.Text = "dsadsq"
+function kibana_start_click {
+    Start-Service kibana
+    $KibanaStartButton.Text = "Running"  
 }
 
-$heartbeat_context_OnClick = ${function:heartbeat_context_OnClick}
+$kibana_start_click = ${function:kibana_start_click}
 
+function kibana_stop_click {
+    Stop-Service kibana #nie ma go w serwisach więc nei ma go jak zabić
+    $KibanaStartButton.Text = "Start"  
+}
+
+$kibana_stop_click = ${function:kibana_stop_click}
+
+function kibana_restart_click {
+    Restart-Service kibana #nie ma go w serwisach więc nei ma go jak zrestartować
+}
+
+$kibana_restart_click = ${function:kibana_restart_click}
+
+function logstash_start_click {
+    Start-Service logstash
+    $logstashStartButton.Text = "Running"  
+}
+
+$logstash_start_click = ${function:logstash_start_click}
+
+function logstash_stop_click {
+    Stop-Service logstash 
+    $logstashStartButton.Text = "Start"  
+}
+
+$logstash_stop_click = ${function:logstash_stop_click}
+
+function logstash_restart_click {
+    Restart-Service logstash 
+}
+
+$logstash_restart_click = ${function:logstash_restart_click}
+
+function filebeat_start_click {
+    Start-Service filebeat
+    $filebeatStartButton.Text = "Running"  
+}
+
+$filebeat_start_click = ${function:filebeat_start_click}
+
+function filebeat_stop_click {
+    Stop-Service filebeat 
+    $filebeatStartButton.Text = "Start"  
+}
+
+$filebeat_stop_click = ${function:filebeat_stop_click}
+
+function filebeat_restart_click {
+    Restart-Service filebeat 
+}
+$filebeat_restart_click = ${function:filebeat_restart_click}
+
+function metricbeat_start_click {
+    Start-Service metricbeat
+    $metricbeatStartButton.Text = "Running"  
+}
+
+$metricbeat_start_click = ${function:metricbeat_start_click}
+
+function metricbeat_stop_click {
+    Stop-Service metricbeat 
+    $metricbeatStartButton.Text = "Start"  
+}
+
+$metricbeat_stop_click = ${function:metricbeat_stop_click}
+
+function metricbeat_restart_click {
+    Restart-Service metricbeat 
+}
+$metricbeat_restart_click = ${function:metricbeat_restart_click}
+
+function heartbeat_start_click {
+    Start-Service heartbeat
+    $heartbeatStartButton.Text = "Running"  
+}
+
+$heartbeat_start_click = ${function:heartbeat_start_click}
+
+function heartbeat_stop_click {
+    Stop-Service heartbeat 
+    $heartbeatStartButton.Text = "Start"  
+}
+
+$heartbeat_stop_click = ${function:heartbeat_stop_click}
+
+function heartbeat_restart_click {
+    Restart-Service heartbeat 
+}
+$heartbeat_restart_click = ${function:heartbeat_restart_click}
 
 #Show form
 $Form.Topmost = $True
