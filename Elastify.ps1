@@ -16,3 +16,4 @@ Start-Service metricbeat
 
 #Starting Winlog
 Start-Service winlogbeat
+#jebac biede
