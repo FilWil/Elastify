@@ -1,3 +1,22 @@
+#Force Elevation
+param([switch]$Elevated)
+function Check-Admin {
+$currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+$currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+}
+if ((Check-Admin) -eq $false)  {
+if ($elevated)
+{
+# could not elevate, quit
+}
+ 
+else {
+ 
+Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
+}
+exit
+}
+
 #References
 [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
@@ -13,7 +32,7 @@ $Form.StartPosition = "CenterScreen"
 #region Labels
 #KibanaLabel
 $KibanaLabel = New-Object System.Windows.Forms.Label
-$KibanaLabel.Location = New-Object System.Drawing.Size(30, 27.5)
+$KibanaLabel.Location = New-Object System.Drawing.Size(20, 27.5)
 $KibanaLabel.Size = New-Object System.Drawing.Size(75,30)
 $KibanaLabel.Text = "Kibana"
 $Form.Controls.Add($KibanaLabel)
@@ -328,4 +347,20 @@ $Form.Topmost = $True
 $Form.Add_Shown({$Form.Activate()})
 [void] $Form.ShowDialog()
 #$HeartbeatButton.Visible = $false
+# #Starting Kibana Server
+# Set-Location -Path C:\ELK_Stack\Kibana\bin
+# Start-Process kibana.bat
+
+# #Starting Logstash
+# Set-Location -Path C:\ELK_Stack\Logstash\bin
+# Start-Process logstash.bat
+
+# #Starting Filebeat
+# Start-Service filebeat
+
+# #Starting Metricbeat
+# Start-Service metricbeat
+
+# #Starting Winlog
+# Start-Service winlogbeat
 
